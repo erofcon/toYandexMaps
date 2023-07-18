@@ -1,5 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 
+from app.schemas import vehicle_type as vehicle_type_schemas
+from app.crud import vehicle_type as vehicle_type_crud
+
 router = APIRouter()
 
 

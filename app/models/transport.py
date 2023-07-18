@@ -1,15 +1,10 @@
-from sqlalchemy import MetaData, Table, Column, Integer, ForeignKey, String, Enum
+from sqlalchemy import MetaData, Table, Column, Integer, ForeignKey, String, Boolean
 
 from .route import route
 from .vehicle_type import vehicle_type
+from .city_name import city_name
 
 metadata = MetaData()
-
-
-class CategoryType(str, Enum):
-    slow = 's'
-    ordinary = 'n'
-
 
 transport = Table(
     'transport', metadata,
@@ -17,7 +12,9 @@ transport = Table(
     Column('car_number', String()),
     Column('imei', String()),
     Column('device_id', Integer()),
-    Column('category', CategoryType(), default=CategoryType.slow),
-    Column('route', String(), ForeignKey(route.c.route)),
-    Column('vehicle_type', String(), ForeignKey(vehicle_type.c.vehicle_type)),
+    Column('category', String(), default='s'),
+    Column('route', Integer(), ForeignKey(route.c.id)),
+    Column('vehicle_type', Integer(), ForeignKey(vehicle_type.c.id)),
+    Column('city_name', Integer(), ForeignKey(city_name.c.id)),
+    Column('send', Boolean, default=True)
 )

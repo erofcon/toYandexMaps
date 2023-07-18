@@ -1,16 +1,23 @@
-# This is a sample Python script.
+from fastapi import FastAPI
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from app.models.database import local_database, remote_database
+from app.routes.city_name import router as city_name_router
+
+from app.background_task.yandex_post import schedular
+
+app = FastAPI()
+
+app.include_router(router=city_name_router)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.on_event('startup')
+async def startup():
+    await local_database.connect()
+    await remote_database.connect()
+    schedular.yandex_post_start()
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# @app.on_event('startup')
+# async def startup():
+#     await local_database.disconnect()
+#     await remote_database.disconnect()
+#     schedular.yandex_post_shutdown()

@@ -1,4 +1,4 @@
-from sqlalchemy import MetaData, Table, Column, Integer, String
+from sqlalchemy import MetaData, Table, Column, Integer, String, Boolean
 
 metadata = MetaData()
 
@@ -7,4 +7,5 @@ city_name = Table(
     Column('id', Integer(), primary_key=True),
     Column('clid', String()),
     Column('description', String()),
+    Column('send', Boolean, default=True)
 )

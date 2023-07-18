@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class CityNameBase(BaseModel):
     clid: str
     description: str
+    send: bool
 
 
 class CityNameCreate(CityNameBase):
