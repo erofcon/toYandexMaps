@@ -1,4 +1,4 @@
-import logging
+from loguru import logger
 import asyncio
 import xml.etree.ElementTree as elTree
 
@@ -36,9 +36,10 @@ async def yandex_post_send(city_id: int, clid: str):
 
         try:
             r = requests.post(url='http://extjams.maps.yandex.net/mtr_collect/1.x/', data=data, headers=headers)
-            logging.log(logging.INFO, f'to yandex send with status code {r.status_code}')
+            logger.info(f'to yandex send with status code {r.status_code}')
+
         except Exception as e:
-            logging.log(logging.ERROR, e)
+            logger.info(e)
 
 
 async def yandex_crud_task():

@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from loguru import logger
 
 from app.models.database import local_database, remote_database
 from app.routes.city_name import router as city_name_router
@@ -8,9 +9,6 @@ from app.routes.route import router as route_router
 from app.routes.transport import router as transport_router
 
 from app.background_task.yandex_post import schedular
-from app.log import log
-
-local_log = log.get_logger(__name__)
 
 app = FastAPI()
 
@@ -18,6 +16,8 @@ app.include_router(router=city_name_router)
 app.include_router(router=vehicle_type_router)
 app.include_router(router=route_router)
 app.include_router(router=transport_router)
+
+logger.add("logs/log.log", rotation="00:00")
 
 
 @app.on_event('startup')
