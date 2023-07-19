@@ -8,9 +8,6 @@ class YandexPost:
     def yandex_post_start(self):
         self.scheduler.add_job(yandex_crud_task, trigger='interval', seconds=20)
         self.scheduler.start()
-        # self.scheduler.add_job(foton_request_task, trigger='interval', minutes=5)
-        # self.scheduler.add_listener(scheduler_listener)
-        # self.scheduler.start()
 
     def yandex_post_shutdown(self):
         self.scheduler.shutdown()

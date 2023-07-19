@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 
 from app.models.database import local_database, remote_database
@@ -31,3 +32,9 @@ async def shutdown():
     await local_database.disconnect()
     await remote_database.disconnect()
     schedular.yandex_post_shutdown()
+
+
+if __name__ == '__main__':
+    uvicorn.run(
+        'main:app', host='0.0.0.0'
+    )
