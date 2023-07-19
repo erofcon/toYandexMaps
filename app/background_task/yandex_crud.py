@@ -27,17 +27,17 @@ async def yandex_post_send(city_id: int, clid: str):
                                   time=location_data.createddatetime.utcnow().strftime('%d%m%Y:%H%M%S')
                                   )
 
-    data = {
-        'compressed': '0',
-        'data': f'{elTree.tostring(root).decode()}'
-    }
+        data = {
+            'compressed': '0',
+            'data': f'{elTree.tostring(root).decode()}'
+        }
 
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
-    try:
-        requests.post(url='http://extjams.maps.yandex.net/mtr_collect/1.x/', data=data, headers=headers)
-    except Exception as e:
-        logging.log(logging.ERROR, e)
+        try:
+            requests.post(url='http://extjams.maps.yandex.net/mtr_collect/1.x/', data=data, headers=headers)
+        except Exception as e:
+            logging.log(logging.ERROR, e)
 
 
 async def yandex_crud_task():
