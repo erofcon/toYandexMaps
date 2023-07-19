@@ -24,6 +24,9 @@ class Transport(TransportBase):
 
 
 class GetTransportData(BaseModel):
+    id: int
+    car_number: str
+    imei: str
     device_id: int
     category: str
     route: str

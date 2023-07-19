@@ -18,7 +18,7 @@ async def create_city_name(city_name: city_name_schemas.CityNameBase) -> bool:
         return False
 
 
-async def get_city_name() -> list[city_name_schemas.CityNames] | list:
+async def get_city_name() -> list[city_name_schemas.CityNames]:
     query = text(
         """
             SELECT *
@@ -34,7 +34,7 @@ async def get_city_name() -> list[city_name_schemas.CityNames] | list:
         return []
 
 
-async def get_send_city_name() -> list[city_name_schemas.CityNames] | list:
+async def get_send_city_name() -> list[city_name_schemas.CityNames]:
     query = text(
         """
             SELECT *

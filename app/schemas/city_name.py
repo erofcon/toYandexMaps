@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class CityNameBase(BaseModel):
     clid: str
-    description: str
+    description: str | None
     send: bool
 
 

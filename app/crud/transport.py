@@ -29,10 +29,27 @@ async def create_transport(transport: transport_schemas.TransportCreate) -> bool
     return False
 
 
+async def get_all_transport_data() -> list[transport_schemas.GetTransportData] | None:
+    query = text(
+        f"""
+            SELECT t.id, t.car_number, t.imei, t.device_id, t.category, r.route, vt.vehicle_type
+            FROM transport t
+            LEFT JOIN route r
+            ON r.id = t.route
+            LEFT JOIN vehicle_type vt ON vt.id = t.vehicle_type
+        """
+    )
+
+    try:
+        return await local_database.fetch_all(query=query)
+    except Exception:
+        return None
+
+
 async def get_transport_data(city_id: int) -> list[transport_schemas.GetTransportData] | None:
     query = text(
         f"""
-            SELECT t.device_id, t.category, r.route, vt.vehicle_type
+            SELECT t.id, t.car_number, t.imei, t.device_id, t.category, r.route, vt.vehicle_type
             FROM transport t
             LEFT JOIN route r
             ON r.id = t.route

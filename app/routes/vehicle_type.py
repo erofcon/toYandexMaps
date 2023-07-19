@@ -7,28 +7,13 @@ router = APIRouter()
 
 
 @router.post('/create_vehicle_type')
-async def create_vehicle_type():
-    print('create_vehicle_type')
+async def create_vehicle_type(vehicle_type: vehicle_type_schemas.VehicleTypeCreate):
+    if not await vehicle_type_crud.create_vehicle_type(vehicle_type=vehicle_type):
+        return HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
     return HTTPException(status_code=status.HTTP_201_CREATED)
 
 
-@router.post('/get_vehicle_type')
-async def create_vehicle_type():
-    print('get_vehicle_type')
-
-    return HTTPException(status_code=status.HTTP_200_OK)
-
-
-@router.post('/update_vehicle_type')
-async def create_vehicle_type():
-    print('update_vehicle_type')
-
-    return HTTPException(status_code=status.HTTP_201_CREATED)
-
-
-@router.post('/delete_vehicle_type')
-async def create_vehicle_type():
-    print('delete_vehicle_type')
-
-    return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
+@router.post('/get_vehicle_type', response_model=list[vehicle_type_schemas.VehicleType])
+async def get_vehicle_type():
+    return await vehicle_type_crud.get_vehicle_type()

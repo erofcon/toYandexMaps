@@ -1,31 +1,19 @@
 from fastapi import APIRouter, HTTPException, status
 
+from app.crud import transport as transport_crud
+from app.schemas import transport as transport_schemas
+
 router = APIRouter()
 
 
 @router.post('/create_transport')
-async def create_transport():
-    print('create_transport')
+async def create_transport(transport: transport_schemas.TransportCreate):
+    if not await transport_crud.create_transport(transport=transport):
+        return HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
     return HTTPException(status_code=status.HTTP_201_CREATED)
 
 
-@router.post('/get_transport')
+@router.post('/get_transport', response_model=list[transport_schemas.GetTransportData])
 async def get_transport():
-    print('get_transport')
-
-    return HTTPException(status_code=status.HTTP_200_OK)
-
-
-@router.post('/update_transport')
-async def update_transport():
-    print('update_transport')
-
-    return HTTPException(status_code=status.HTTP_201_CREATED)
-
-
-@router.post('/delete_transport')
-async def delete_transport():
-    print('delete_transport')
-
-    return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
+    return await transport_crud.get_all_transport_data()
