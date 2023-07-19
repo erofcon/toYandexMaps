@@ -35,7 +35,8 @@ async def yandex_post_send(city_id: int, clid: str):
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
         try:
-            requests.post(url='http://extjams.maps.yandex.net/mtr_collect/1.x/', data=data, headers=headers)
+            r = requests.post(url='http://extjams.maps.yandex.net/mtr_collect/1.x/', data=data, headers=headers)
+            logging.log(logging.INFO, f'to yandex send with status code {r.status_code}')
         except Exception as e:
             logging.log(logging.ERROR, e)
 
