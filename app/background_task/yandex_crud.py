@@ -16,26 +16,24 @@ async def yandex_post_send(city_id: int, clid: str):
 
     if len(transport_list) > 0:
         for i in transport_list:
-            track = elTree.SubElement(root, 'track', uuid=str(i.device_id), category=i.category, route=i.route,
-                                      vehicle_type=i.vehicle_type)
             location_data = await nddata_crud.get_nddata(i.device_id)
 
             if location_data is not None:
+                track = elTree.SubElement(root, 'track', uuid=str(i.device_id), category=i.category, route=i.route,
+                                          vehicle_type=i.vehicle_type)
+
                 elTree.SubElement(track, 'point',
                                   latitude=str(location_data.lat), longitude=str(location_data.lon),
                                   avg_speed=str(location_data.speed), direction=str(location_data.direction),
                                   time=location_data.createddatetime.utcnow().strftime('%d%m%Y:%H%M%S')
                                   )
 
-        data = {
-            'compressed': '0',
-            'data': f'{elTree.tostring(root).decode()}'
-        }
-
+        data = f"""compressed=0&data={elTree.tostring(root, xml_declaration=True, encoding='utf-8').decode()}"""
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
         try:
             r = requests.post(url='http://extjams.maps.yandex.net/mtr_collect/1.x/', data=data, headers=headers)
+
             logger.info(f'to yandex send with status code {r.status_code}')
 
         except Exception as e:

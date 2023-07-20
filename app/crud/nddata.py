@@ -11,7 +11,7 @@ async def get_device(imei: str) -> nddata_schemas.NddataDevice | None:
         FROM navigationdevice
         WHERE code = '{imei}'
     """)
-    print(query)
+
     try:
         return await remote_database.fetch_one(query=query)
     except Exception:
