@@ -10,6 +10,7 @@ async def get_device(imei: str) -> nddata_schemas.NddataDevice | None:
         SELECT id
         FROM navigationdevice
         WHERE code = '{imei}'
+        AND isdeleted = '0'
     """)
 
     try:
