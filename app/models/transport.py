@@ -9,9 +9,9 @@ metadata = MetaData()
 transport = Table(
     'transport', metadata,
     Column('id', Integer(), primary_key=True),
-    Column('car_number', String()),
-    Column('imei', String()),
-    Column('device_id', Integer()),
+    Column('car_number', String(), unique=True),
+    Column('imei', String(), unique=True),
+    Column('device_id', Integer(), unique=True),
     Column('category', String(), default='s'),
     Column('route', Integer(), ForeignKey(route.c.id)),
     Column('vehicle_type', Integer(), ForeignKey(vehicle_type.c.id)),

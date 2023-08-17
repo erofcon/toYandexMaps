@@ -7,6 +7,6 @@ metadata = MetaData()
 route = Table(
     'route', metadata,
     Column('id', Integer(), primary_key=True),
-    Column('route', String()),
+    Column('route', String(), unique=True),
     Column('city_id', Integer(), ForeignKey(city_name.c.id, ondelete='CASCADE'))
 )
